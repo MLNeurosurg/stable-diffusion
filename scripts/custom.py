@@ -74,7 +74,7 @@ class CustomBase(Dataset):
         # img = torch.moveaxis(img, 0, 1)
         # print(img.shape)
 
-        return img
+        return {"image":img}
 
 
 
