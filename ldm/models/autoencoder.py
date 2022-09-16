@@ -1,4 +1,4 @@
-from curses import version
+from packaging import version
 import torch
 import pytorch_lightning as pl
 import torch.nn.functional as F
