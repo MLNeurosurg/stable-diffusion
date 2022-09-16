@@ -33,8 +33,8 @@ model:
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 10
-    num_workers: 20
+    batch_size: 5
+    num_workers: 8
     wrap: true
     train:
       target: scripts.custom.CustomTrain
