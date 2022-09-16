@@ -556,12 +556,14 @@ if __name__ == "__main__":
                 }
             },
         }
+        
         default_logger_cfg = default_logger_cfgs["testtube"]
+        wandb = default_logger_cfgs["wandb"]
         if "logger" in lightning_config:
             logger_cfg = lightning_config.logger
         else:
             logger_cfg = OmegaConf.create()
-        logger_cfg = OmegaConf.merge(default_logger_cfg, logger_cfg)
+        logger_cfg = OmegaConf.merge(default_logger_cfg, wandb, logger_cfg)
         trainer_kwargs["logger"] = instantiate_from_config(logger_cfg)
 
         # modelcheckpoint - use TrainResult/EvalResult(checkpoint_on=metric) to
