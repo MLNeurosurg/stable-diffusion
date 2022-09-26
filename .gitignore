@@ -1,5 +1,5 @@
 __pycache__/
 slurm*
-src/taming-transformers/
-src/clip/
+#src/taming-transformers/
+#src/clip/
 
