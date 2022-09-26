@@ -26,18 +26,19 @@ model:
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 12
-    wrap: True
+    batch_size: 3
+    num_workers: 8
+    wrap: true
     train:
-      target: ldm.data.imagenet.ImageNetSRTrain
+      target: scripts.custom.CustomTrain
       params:
+        training_images_list_file: /nfs/turbo/umms-tocho/code/achowdur/experiment/vqmodel/train2.csv
         size: 256
-        degradation: pil_nearest
     validation:
-      target: ldm.data.imagenet.ImageNetSRValidation
+      target: scripts.custom.CustomTest
       params:
+        test_images_list_file: /nfs/turbo/umms-tocho/code/achowdur/experiment/vqmodel/test2.csv
         size: 256
-        degradation: pil_nearest
 
 lightning:
   callbacks:
