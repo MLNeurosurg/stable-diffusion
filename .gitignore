@@ -3,3 +3,5 @@ slurm*
 src/taming-transformers/
 src/clip/
 
+scripts/latent-diffusion
+scripts/taming-transformers
