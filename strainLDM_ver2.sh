@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=20
 #SBATCH --mem-per-cpu=4g
 #SBATCH --gres=gpu:4
-#SBATCH --time=120:00:00
+#SBATCH --time=140:00:00
 #SBATCH --account=precisionhealth_owned1
 #SBATCH --partition=precisionhealth
 #SBATCH --mail-user=achowdur@umich.edu
