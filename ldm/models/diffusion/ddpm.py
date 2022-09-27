@@ -330,7 +330,8 @@ class DDPM(pl.LightningModule):
         x = batch[k]
         if len(x.shape) == 3:
             x = x[..., None]
-        x = rearrange(x, 'b h w c -> b c h w')
+        # x = x.permute(0,1,2,3)
+        # x = rearrange(x, 'b h w c -> b c h w')
         x = x.to(memory_format=torch.contiguous_format).float()
         return x
 
@@ -484,7 +485,12 @@ class LatentDiffusion(DDPM):
             x = super().get_input(batch, self.first_stage_key)
             x = x.to(self.device)
             encoder_posterior = self.encode_first_stage(x)
-            z = self.get_first_stage_encoding(encoder_posterior).detach()
+
+            # print("### STD OF ENCODINGS: ", encoder_posterior)
+
+            # print("ENCODINGS: ", encoder_posterior[0])
+
+            z = self.get_first_stage_encoding(encoder_posterior[0]).detach()
             del self.scale_factor
             self.register_buffer('scale_factor', 1. / z.flatten().std())
             print(f"setting self.scale_factor to {self.scale_factor}")
@@ -502,6 +508,9 @@ class LatentDiffusion(DDPM):
     def instantiate_first_stage(self, config):
         model = instantiate_from_config(config)
         self.first_stage_model = model.eval()
+
+        print(self.first_stage_model)
+
         self.first_stage_model.train = disabled_train
         for param in self.first_stage_model.parameters():
             param.requires_grad = False
@@ -540,6 +549,7 @@ class LatentDiffusion(DDPM):
         return denoise_grid
 
     def get_first_stage_encoding(self, encoder_posterior):
+        # breakpoint()
         if isinstance(encoder_posterior, DiagonalGaussianDistribution):
             z = encoder_posterior.sample()
         elif isinstance(encoder_posterior, torch.Tensor):
@@ -657,8 +667,12 @@ class LatentDiffusion(DDPM):
         if bs is not None:
             x = x[:bs]
         x = x.to(self.device)
+
+        print(x.shape)
         encoder_posterior = self.encode_first_stage(x)
-        z = self.get_first_stage_encoding(encoder_posterior).detach()
+        # print("encoder_posterior", encoder_posterior)
+
+        z = self.get_first_stage_encoding(encoder_posterior[0]).detach()
 
         if self.model.conditioning_key is not None:
             if cond_key is None:
@@ -769,6 +783,7 @@ class LatentDiffusion(DDPM):
                 z = torch.argmax(z.exp(), dim=1).long()
             z = self.first_stage_model.quantize.get_codebook_entry(z, shape=None)
             z = rearrange(z, 'b h w c -> b c h w').contiguous()
+            # z = z.contiguous()
 
         z = 1. / self.scale_factor * z
 
