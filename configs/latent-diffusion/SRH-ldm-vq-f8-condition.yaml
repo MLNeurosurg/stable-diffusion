@@ -9,7 +9,7 @@ model:
     timesteps: 1000
     loss_type: l1
     first_stage_key: "image"
-    cond_stage_key: "label"
+    cond_stage_key: "class_label"
     image_size: 32
     channels: 4
     cond_stage_trainable: False
@@ -63,7 +63,7 @@ model:
     cond_stage_config:
       target: ldm.modules.encoders.modules.ClassEmbedder
       params:
-        embed_dim: 512
+        embed_dim: 256
         n_classes: 7
         key: label
 

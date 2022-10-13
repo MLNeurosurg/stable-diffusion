@@ -1287,7 +1287,8 @@ class LatentDiffusion(DDPM):
                 xc = log_txt_as_img((x.shape[2], x.shape[3]), batch["caption"])
                 log["conditioning"] = xc
             elif self.cond_stage_key == 'class_label':
-                xc = log_txt_as_img((x.shape[2], x.shape[3]), batch["human_label"])
+                #xc = log_txt_as_img((x.shape[2], x.shape[3]), batch["human_label"])
+                xc = log_txt_as_img((x.shape[2], x.shape[3]), batch["label"])
                 log['conditioning'] = xc
             elif isimage(xc):
                 log["conditioning"] = xc
