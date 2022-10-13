@@ -4,3 +4,10 @@
 [submodule "src/taming-transformers"]
 	path = src/taming-transformers
 	url = git@github.com:CompVis/taming-transformers.git
+[submodule "apex"]
+        path = apex
+	url = git@github.com:NVIDIA/apex.git
+[submodule "src/torchsrh"]
+        path = src/torchsrh
+        url = git@github.com:MLNeurosurg/torchsrh.git
+
