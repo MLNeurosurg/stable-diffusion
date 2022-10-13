@@ -9,7 +9,7 @@ model:
     timesteps: 1000
     loss_type: l1
     first_stage_key: "image"
-    cond_stage_key: "image"
+    cond_stage_key: "label"
     image_size: 32
     channels: 4
     cond_stage_trainable: False
