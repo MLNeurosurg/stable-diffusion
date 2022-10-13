@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 [submodule "src/clip"]
 	path = src/clip
 	url = git@github.com:openai/CLIP.git
 [submodule "src/taming-transformers"]
 	path = src/taming-transformers
 	url = git@github.com:CompVis/taming-transformers.git
-=======
-[submodule "apex"]
-	path = apex
-	url = git@github.com:NVIDIA/apex.git
->>>>>>> 66297e52335fc4b09848fc6aeba6bfd739b6a022
