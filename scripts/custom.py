@@ -14,7 +14,7 @@ from torchvision.transforms import (Compose, ToTensor, Normalize, RandomAffine,
 
 from taming.data.base import ImagePaths, NumpyPaths, ConcatDatasetWithIndex
 
-from datasets.patch_dataset import PatchDFDataset, PatchDataset
+from scripts.datasets.patch_dataset import PatchDFDataset, PatchDataset
 class GetThirdChannel(torch.nn.Module):
     """Computes the third channel of SRH image
     Compute the third channel of SRH images by subtracting CH3 and CH2. The

@@ -6,7 +6,7 @@ from collections import Counter
 
 import torch
 from torch.utils.data import Dataset
-from datasets.meta_parser import DatasetLevel
+from scripts.datasets.meta_parser import DatasetLevel
 
 
 class BalancedDataset(Dataset):
