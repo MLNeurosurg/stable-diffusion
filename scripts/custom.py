@@ -101,6 +101,6 @@ class CustomTest(CustomBase):
         df = pd.read_csv(test_images_list_file)
         self.data = list(df["file_name"])
 
-patch_obj = PatchDataset(data_root = "/nfs/turbo/umms-tocho/root_srh_db",slides_file = "data/srh7v1_test.csv",
+patch_obj = PatchDataset(data_root = "/nfs/turbo/umms-tocho/root_srh_db",slides_file = "/nfs/turbo/umms-tocho/code/achowdur/repos/v1stable/data/srh7v1_test.csv",
 transform = srh_transforms, target_transform = None)
 breakpoint()
