@@ -9,10 +9,10 @@ import pandas
 import numpy as np
 from tqdm import tqdm
 
-from datasets.db_improc import process_read_srh
-from datasets.meta_parser import SRHCSVParser, DatasetLevel
-from datasets.balanced_dataset import BalancedDataset
-from datasets.common import get_chnl_min, get_chnl_max
+from scripts.datasets.db_improc import process_read_srh
+from scripts.datasets.meta_parser import SRHCSVParser, DatasetLevel
+from scripts.datasets.balanced_dataset import BalancedDataset
+from scripts.datasets.common import get_chnl_min, get_chnl_max
 from tifffile import imread
 
 class PatchData(TypedDict):
@@ -245,7 +245,7 @@ class PatchContrastiveDataset(PatchBaseDataset):
 
 
 if __name__ == '__main__':
-    from datasets.db_improc import get_transformations
+    from scripts.datasets.db_improc import get_transformations
     logging.basicConfig(
         level=logging.DEBUG,
         format=

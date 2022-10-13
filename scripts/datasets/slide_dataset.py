@@ -12,10 +12,10 @@ import pandas
 import numpy as np
 from torchvision import transforms
 
-from datasets.common import PatchInstance
-from datasets.db_improc import process_read_srh
-from datasets.meta_parser import SRHCSVParser
-from datasets.balanced_dataset import BalancedDataset
+from scripts.datasets.common import PatchInstance
+from scripts.datasets.db_improc import process_read_srh
+from scripts.datasets.meta_parser import SRHCSVParser
+from scripts.datasets.balanced_dataset import BalancedDataset
 
 
 class SlideBaseDataset(BalancedDataset):
@@ -171,7 +171,7 @@ class SlideContrastiveDataset(SlideBaseDataset):
 
 
 if __name__ == '__main__':
-    from datasets.db_improc import get_transformations
+    from scripts.datasets.db_improc import get_transformations
     logging.basicConfig(
         level=logging.DEBUG,
         format=

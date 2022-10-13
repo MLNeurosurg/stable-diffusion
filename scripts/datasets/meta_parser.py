@@ -11,8 +11,8 @@ from tqdm import tqdm
 
 from torch.utils.data import Dataset
 
-from datasets.common import patch_code_to_list
-from datasets.common import PatchInstance, SlideInstance
+from scripts.datasets.common import patch_code_to_list
+from scripts.datasets.common import PatchInstance, SlideInstance
 from enum import Enum, unique, auto
 
 
