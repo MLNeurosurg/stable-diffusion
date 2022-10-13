@@ -63,7 +63,7 @@ model:
     cond_stage_config:
       target: ldm.modules.encoders.modules.ClassEmbedder
       params:
-        embed_dim: 256
+        embed_dim: 512
         n_classes: 7
         key: label
 
