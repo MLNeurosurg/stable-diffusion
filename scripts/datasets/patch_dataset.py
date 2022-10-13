@@ -121,10 +121,10 @@ class PatchDFDataset(PatchBaseDataset):
             logging.error("bad_file - {}".format(inst.im_path))
             return {"image": None, "label": None, "path": [None]}
 
-        logging.debug(f"before xform im shape {im.shape}")
-        logging.debug(f"before xform im mean  {im.mean(dim=[1,2])}")
-        logging.debug(f"before xform im min   {get_chnl_min(im)}")
-        logging.debug(f"before xform im max   {get_chnl_max(im)}")
+        # logging.debug(f"before xform im shape {im.shape}")
+        # logging.debug(f"before xform im mean  {im.mean(dim=[1,2])}")
+        # logging.debug(f"before xform im min   {get_chnl_min(im)}")
+        # logging.debug(f"before xform im max   {get_chnl_max(im)}")
         im = np.float32(im)
         im = np.moveaxis(im, 0, -1)
         # Perform transformations
