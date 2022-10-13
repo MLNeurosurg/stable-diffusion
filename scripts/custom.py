@@ -106,8 +106,8 @@ class CustomTrainSRH7(PatchDataset):
         super().__init__(data_root = "/nfs/turbo/umms-tocho/root_srh_db", slides_file = training_images_list_file, transform = srh_transforms, target_transform = None)
 
 class CustomTestSRH7(PatchDataset):
-    def __init__(self, size, training_images_list_file):
-        super().__init__(data_root = "/nfs/turbo/umms-tocho/root_srh_db", slides_file = training_images_list_file, transform = srh_transforms, target_transform = None)
+    def __init__(self, size, test_images_list_file):
+        super().__init__(data_root = "/nfs/turbo/umms-tocho/root_srh_db", slides_file = test_images_list_file, transform = srh_transforms, target_transform = None)
 
 patch_obj = PatchDataset(data_root = "/nfs/turbo/umms-tocho/root_srh_db",slides_file = "/nfs/turbo/umms-tocho/code/achowdur/repos/v1stable/data/srh7v1_test.csv",
 transform = srh_transforms, target_transform = None)
