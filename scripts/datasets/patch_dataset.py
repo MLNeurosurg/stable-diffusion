@@ -6,13 +6,14 @@ from typing import Optional, List, TypedDict, Any, NamedTuple
 
 import torch
 import pandas
+import numpy as np
 from tqdm import tqdm
 
 from datasets.db_improc import process_read_srh
 from datasets.meta_parser import SRHCSVParser, DatasetLevel
 from datasets.balanced_dataset import BalancedDataset
 from datasets.common import get_chnl_min, get_chnl_max
-
+from tifffile import imread
 
 class PatchData(TypedDict):
     image: Optional[torch.Tensor]
@@ -115,7 +116,7 @@ class PatchDFDataset(PatchBaseDataset):
         target = self.class_to_idx_[inst.label]
 
         try:
-            im = self.process_read_im_(inst.im_path)
+            im = imread(inst.im_path)
         except:
             logging.error("bad_file - {}".format(inst.im_path))
             return {"image": None, "label": None, "path": [None]}
@@ -124,7 +125,8 @@ class PatchDFDataset(PatchBaseDataset):
         logging.debug(f"before xform im mean  {im.mean(dim=[1,2])}")
         logging.debug(f"before xform im min   {get_chnl_min(im)}")
         logging.debug(f"before xform im max   {get_chnl_max(im)}")
-
+        im = np.float32(im)
+        im = np.moveaxis(im, 0, -1)
         # Perform transformations
         if self.transform_ is not None:
             im = self.transform_(im)
