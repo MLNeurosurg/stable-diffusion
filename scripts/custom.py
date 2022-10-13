@@ -13,6 +13,8 @@ from torchvision.transforms import (Compose, ToTensor, Normalize, RandomAffine,
                                     GaussianBlur, RandomErasing, RandomCrop)
 
 from taming.data.base import ImagePaths, NumpyPaths, ConcatDatasetWithIndex
+
+from datasets.patch_dataset import PatchDFDataset, PatchDataset
 class GetThirdChannel(torch.nn.Module):
     """Computes the third channel of SRH image
     Compute the third channel of SRH images by subtracting CH3 and CH2. The
@@ -76,7 +78,15 @@ class CustomBase(Dataset):
 
         return {"image":img}
 
-
+srh_transforms = transforms.Compose([
+            transforms.ToTensor(),
+            RandomCrop(256),
+            transforms.Normalize((0,0),(2**16,2**16)),
+            GetThirdChannel(),
+            transforms.RandomVerticalFlip(),
+            transforms.RandomHorizontalFlip(),
+            MinMaxChop()
+        ])
 
 class CustomTrain(CustomBase):
     def __init__(self, size, training_images_list_file):
@@ -91,4 +101,6 @@ class CustomTest(CustomBase):
         df = pd.read_csv(test_images_list_file)
         self.data = list(df["file_name"])
 
-
+patch_obj = PatchDataset(data_root = "/nfs/turbo/umms-tocho/root_srh_db",slides_file = "data/srh7v1_test.csv",
+transform = srh_transforms, target_transform = None)
+breakpoint()
