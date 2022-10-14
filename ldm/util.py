@@ -19,7 +19,9 @@ def log_txt_as_img(wh, xc, size=10):
     # xc a list of captions to plot
     b = len(xc)
     txts = list()
-    print(xc)
+    print("tensor:", xc)
+    xc = xc.unsqueeze(1)
+    print("unsqueeze:", xc)
     for bi in range(b):
         txt = Image.new("RGB", wh, color="white")
         draw = ImageDraw.Draw(txt)
