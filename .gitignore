@@ -5,3 +5,5 @@ src/clip/
 
 scripts/latent-diffusion
 scripts/taming-transformers
+__pycache__
+ldm/__pycache__
