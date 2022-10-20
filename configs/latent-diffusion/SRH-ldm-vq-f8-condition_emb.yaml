@@ -1,5 +1,5 @@
 model:
-  base_learning_rate: 2.0e-5   # set to target_lr by starting main.py with '--scale_lr False'
+  base_learning_rate: 1.0e-5   # set to target_lr by starting main.py with '--scale_lr False'
   target: ldm.models.diffusion.ddpm.LatentDiffusion
   params:
     linear_start: 0.0015
@@ -20,7 +20,7 @@ model:
     scheduler_config: # 10000 warmup steps
       target: ldm.lr_scheduler.LambdaLinearScheduler
       params:
-        warm_up_steps: [500]
+        warm_up_steps: [1000]
         cycle_lengths: [10000000000000]
         f_start: [5.e-6]
         f_max: [1.]
