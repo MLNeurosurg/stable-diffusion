@@ -12,7 +12,7 @@ model:
     cond_stage_key: "class_label"
     image_size: 32
     channels: 4
-    cond_stage_trainable: False
+    cond_stage_trainable: True
     concat_mode: False
     scale_by_std: True
     monitor: 'val/loss_simple_ema'
