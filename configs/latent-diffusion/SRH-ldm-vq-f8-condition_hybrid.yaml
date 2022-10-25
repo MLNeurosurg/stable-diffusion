@@ -1,5 +1,5 @@
 model:
-  base_learning_rate: 5git pul.0e-5   # set to target_lr by starting main.py with '--scale_lr False'
+  base_learning_rate: 1.0e-5   # set to target_lr by starting main.py with '--scale_lr False'
   target: ldm.models.diffusion.ddpm.LatentDiffusion
   params:
     linear_start: 0.0015
@@ -12,15 +12,16 @@ model:
     cond_stage_key: "class_label"
     image_size: 32
     channels: 4
-    cond_stage_trainable: False
-    concat_mode: False
-    scale_by_std: True
+    cond_stage_trainable: True
+    conditioning_key: "hybrid"
+    scale_factor: 7
+    scale_by_std: False
     monitor: 'val/loss_simple_ema'
 
     scheduler_config: # 10000 warmup steps
       target: ldm.lr_scheduler.LambdaLinearScheduler
       params:
-        warm_up_steps: [500]
+        warm_up_steps: [1000]
         cycle_lengths: [10000000000000]
         f_start: [5.e-6]
         f_max: [1.]
@@ -63,14 +64,14 @@ model:
     cond_stage_config:
       target: ldm.modules.encoders.modules.ClassEmbedder
       params:
-        embed_dim: 512
+        embed_dim: 7
         n_classes: 7
         key: label
 
 data:
   target: main.DataModuleFromConfig
   params:
-    batch_size: 4
+    batch_size: 8
     num_workers: 8
     wrap: true
     train:

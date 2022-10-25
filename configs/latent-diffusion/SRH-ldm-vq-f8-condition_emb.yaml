@@ -14,7 +14,8 @@ model:
     channels: 4
     cond_stage_trainable: True
     concat_mode: False
-    scale_by_std: True
+    scale_factor: 3.5
+    scale_by_std: False
     monitor: 'val/loss_simple_ema'
 
     scheduler_config: # 10000 warmup steps
