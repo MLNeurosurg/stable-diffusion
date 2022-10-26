@@ -1419,13 +1419,13 @@ class DiffusionWrapper(pl.LightningModule):
         if self.conditioning_key is None:
             out = self.diffusion_model(x, t)
         elif self.conditioning_key == 'concat':
+            print("Shapes >>>>",x.shape(), c_concat.shape())
             xc = torch.cat([x] + c_concat, dim=1)
             out = self.diffusion_model(xc, t)
         elif self.conditioning_key == 'crossattn':
             cc = torch.cat(c_crossattn, 1)
             out = self.diffusion_model(x, t, context=cc)
         elif self.conditioning_key == 'hybrid':
-            print("Shapes >>>>",x.shape(), c_concat.shape())
             xc = torch.cat([x] + c_concat, dim=1)
             cc = torch.cat(c_crossattn, 1)
             out = self.diffusion_model(xc, t, context=cc)
