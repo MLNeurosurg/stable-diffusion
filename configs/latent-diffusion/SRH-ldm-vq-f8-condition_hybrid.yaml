@@ -77,12 +77,12 @@ data:
     train:
       target: scripts.custom.CustomTrainSRH7
       params:
-        training_images_list_file: /nfs/turbo/umms-tocho/code/achowdur/repos/v1stable/data/srh7v1_train.csv
+        training_images_list_file: /nfs/turbo/umms-tocho/code/achowdur/repos/v1stable/data/srh7v1_toy.csv
         size: 256
     validation:
       target: scripts.custom.CustomTestSRH7
       params:
-        test_images_list_file: /nfs/turbo/umms-tocho/code/achowdur/repos/v1stable/data/srh7v1_test.csv
+        test_images_list_file: /nfs/turbo/umms-tocho/code/achowdur/repos/v1stable/data/srh7v1_toy.csv
         size: 256
 
 lightning:
