@@ -904,7 +904,7 @@ class LatentDiffusion(DDPM):
         return [rescale_bbox(b) for b in bboxes]
 
     def apply_model(self, x_noisy, t, cond, return_ids=False):
-        print("COND >>>>>>>>>>>>>>>>", cond)
+        # print("COND >>>>>>>>>>>>>>>>", cond)
         if isinstance(cond, dict):
             # hybrid case, cond is exptected to be a dict
             pass
@@ -1425,7 +1425,7 @@ class DiffusionWrapper(pl.LightningModule):
             cc = torch.cat(c_crossattn, 1)
             out = self.diffusion_model(x, t, context=cc)
         elif self.conditioning_key == 'hybrid':
-            print(x, c_concat)
+            print("Shapes >>>>",x.shape(), c_concat.shape())
             xc = torch.cat([x] + c_concat, dim=1)
             cc = torch.cat(c_crossattn, 1)
             out = self.diffusion_model(xc, t, context=cc)
