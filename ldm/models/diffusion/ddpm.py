@@ -904,7 +904,7 @@ class LatentDiffusion(DDPM):
         return [rescale_bbox(b) for b in bboxes]
 
     def apply_model(self, x_noisy, t, cond, return_ids=False):
-
+        print("COND >>>>>>>>>>>>>>>>", cond)
         if isinstance(cond, dict):
             # hybrid case, cond is exptected to be a dict
             pass
@@ -1027,7 +1027,6 @@ class LatentDiffusion(DDPM):
     def p_losses(self, x_start, cond, t, noise=None):
         noise = default(noise, lambda: torch.randn_like(x_start))
         x_noisy = self.q_sample(x_start=x_start, t=t, noise=noise)
-        print("COND", cond)
         model_output = self.apply_model(x_noisy, t, cond)
 
         loss_dict = {}
