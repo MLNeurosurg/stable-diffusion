@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=cldmv3
+#SBATCH --job-name=cldmhbd
 #SBATCH --mail-type=ALL
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=20
@@ -15,5 +15,5 @@
 # python job to run
 # conda activate ldm
 # python main.py --base models/first_stage_models/vq-f8-n256/config.yaml -r ../../experiment/vqmodel/logs/2022-09-21T01-20-11_config/ -l /nfs/turbo/umms-tocho/code/achowdur/experiment/vqmodel/logs -p bigsrhldm -t True --gpus 0,1,2,3
-python main.py --base configs/latent-diffusion/SRH-ldm-vq-f8-condition_emb.yaml -l /nfs/turbo/umms-tocho/code/achowdur/experiment/ldm/logs -p condldmv1 -t True --gpus 0,1,2,3,
+python main.py --base configs/latent-diffusion/SRH-ldm-vq-f8-condition_hybrid.yaml -r /nfs/turbo/umms-tocho/code/achowdur/experiment/ldm/logs/2022-10-25T17-12-44_SRH-ldm-vq-f8-condition_hybrid -l /nfs/turbo/umms-tocho/code/achowdur/experiment/ldm/logs -p hybridcldm -t True --gpus 0,1,2,3,
 
