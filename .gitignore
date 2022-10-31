@@ -8,3 +8,4 @@ scripts/taming-transformers
 __pycache__
 ldm/__pycache__
 .vscode/
+models/first_stage_models/*/model.ckpt
