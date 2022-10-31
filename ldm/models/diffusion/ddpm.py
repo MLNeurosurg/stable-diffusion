@@ -1421,7 +1421,7 @@ class DiffusionWrapper(pl.LightningModule):
         elif self.conditioning_key == 'concat':
             # breakpoint()
             # print("Shapes >>>>",x, c_concat)
-
+            c_concat = [c_concat[0].resize_([8,1,32,32])]
             xc = torch.cat([x] + c_concat, dim=1)
             out = self.diffusion_model(xc, t)
         elif self.conditioning_key == 'crossattn':
