@@ -13,7 +13,7 @@ model:
     image_size: 32
     channels: 4
     cond_stage_trainable: True
-    conditioning_key: "concat"
+    conditioning_key: "hybrid"
     scale_factor: 7
     scale_by_std: False
     monitor: 'val/loss_simple_ema'
