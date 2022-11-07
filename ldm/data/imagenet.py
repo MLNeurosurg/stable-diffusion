@@ -152,7 +152,7 @@ class ImageNetTrain(ImageNetBase):
             self.root = os.path.join(self.data_root, self.NAME)
         else:
             cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
-            self.root = os.path.join("/scratch/tocho_root/tocho0/achowdur/.cache", "autoencoders/data", self.NAME)
+            self.root = os.path.join(cachedir, "autoencoders/data", self.NAME)
 
         self.datadir = os.path.join(self.root, "data")
         self.txt_filelist = os.path.join(self.root, "filelist.txt")
@@ -218,7 +218,7 @@ class ImageNetValidation(ImageNetBase):
             self.root = os.path.join(self.data_root, self.NAME)
         else:
             cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
-            self.root = os.path.join("/scratch/tocho_root/tocho0/achowdur/.cache", "autoencoders/data", self.NAME)
+            self.root = os.path.join(cachedir, "autoencoders/data", self.NAME)
         self.datadir = os.path.join(self.root, "data")
         self.txt_filelist = os.path.join(self.root, "filelist.txt")
         self.expected_length = 50000
