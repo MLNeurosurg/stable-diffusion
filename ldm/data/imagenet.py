@@ -142,7 +142,7 @@ class ImageNetTrain(ImageNetBase):
         147897477120,
     ]
 
-    def __init__(self, process_images=True, data_root=None, **kwargs):
+    def __init__(self, process_images=True, data_root="/scratch/tocho_root/tocho0/achowdur/.cache/autoencoders/data/", **kwargs):
         self.process_images = process_images
         self.data_root = data_root
         super().__init__(**kwargs)
@@ -208,7 +208,7 @@ class ImageNetValidation(ImageNetBase):
         1950000,
     ]
 
-    def __init__(self, process_images=True, data_root=None, **kwargs):
+    def __init__(self, process_images=True, data_root = "/scratch/tocho_root/tocho0/achowdur/.cache/autoencoders/data/", **kwargs):
         self.data_root = data_root
         self.process_images = process_images
         super().__init__(**kwargs)
