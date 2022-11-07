@@ -14,7 +14,7 @@ from torchvision.transforms import (Compose, ToTensor, Normalize, RandomAffine,
 
 from taming.data.base import ImagePaths, NumpyPaths, ConcatDatasetWithIndex
 
-from scripts.datasets.patch_dataset import PatchDFDataset, PatchDataset
+from scripts.datasets.patch_dataset import PatchDFDataset, PatchDataset, process_read_srh
 class GetThirdChannel(torch.nn.Module):
     """Computes the third channel of SRH image
     Compute the third channel of SRH images by subtracting CH3 and CH2. The
@@ -50,7 +50,6 @@ class CustomBase(Dataset):
         super().__init__()
         self.data = None
         self.transform = transforms.Compose([
-            transforms.ToTensor(),
             RandomCrop(256),
             transforms.Normalize((0,0),(2**16,2**16)),
             GetThirdChannel(),
@@ -66,10 +65,10 @@ class CustomBase(Dataset):
         path_ = self.data[index]
         path_ = "/nfs/turbo/umms-tocho/root_srh_db"+ path_
         try:
-            img = imread(path_)
+            img = process_read_srh(path_)
         except FileNotFoundError:
             time.sleep(10)
-            img = imread(path_)
+            img = process_read_srh(path_)
         img = np.float32(img)
         img = np.moveaxis(img, 0, -1)
         img = self.transform(img)
