@@ -77,11 +77,15 @@ data:
       target: ldm.data.imagenet.ImageNetTrain
       params:
         config:
+          data_root: /scratch/tocho_root/tocho0/achowdur/.cache/autoencoders/data/
           size: 256
+
+
     validation:
       target: ldm.data.imagenet.ImageNetValidation
       params:
         config:
+          data_root: /scratch/tocho_root/tocho0/achowdur/.cache/autoencoders/data/
           size: 256
 
 
