@@ -12,7 +12,7 @@ model:
     image_size: 32
     channels: 4
     cond_stage_trainable: true
-    conditioning_key: crossattn
+    conditioning_key: hybrid
     monitor: val/loss_simple_ema
     unet_config:
       target: ldm.modules.diffusionmodules.openaimodel.UNetModel
@@ -94,7 +94,7 @@ lightning:
     image_logger:
       target: main.ImageLogger
       params:
-        batch_frequency: 1000
+        batch_frequency: 2000
         max_images: 8
         increase_log_steps: False
 
