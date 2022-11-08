@@ -330,8 +330,7 @@ class DDPM(pl.LightningModule):
         x = batch[k]
         if len(x.shape) == 3:
             x = x[..., None]
-        # x = x.permute(0,1,2,3)
-        # x = rearrange(x, 'b h w c -> b c h w')
+        x = rearrange(x, 'b h w c -> b c h w')
         x = x.to(memory_format=torch.contiguous_format).float()
         return x
 
@@ -485,12 +484,7 @@ class LatentDiffusion(DDPM):
             x = super().get_input(batch, self.first_stage_key)
             x = x.to(self.device)
             encoder_posterior = self.encode_first_stage(x)
-
-            # print("### STD OF ENCODINGS: ", encoder_posterior)
-
-            # print("ENCODINGS: ", encoder_posterior[0])
-
-            z = self.get_first_stage_encoding(encoder_posterior[0]).detach()
+            z = self.get_first_stage_encoding(encoder_posterior).detach()
             del self.scale_factor
             self.register_buffer('scale_factor', 1. / z.flatten().std())
             print(f"setting self.scale_factor to {self.scale_factor}")
@@ -508,9 +502,6 @@ class LatentDiffusion(DDPM):
     def instantiate_first_stage(self, config):
         model = instantiate_from_config(config)
         self.first_stage_model = model.eval()
-
-        print(self.first_stage_model)
-
         self.first_stage_model.train = disabled_train
         for param in self.first_stage_model.parameters():
             param.requires_grad = False
@@ -549,7 +540,6 @@ class LatentDiffusion(DDPM):
         return denoise_grid
 
     def get_first_stage_encoding(self, encoder_posterior):
-        # breakpoint()
         if isinstance(encoder_posterior, DiagonalGaussianDistribution):
             z = encoder_posterior.sample()
         elif isinstance(encoder_posterior, torch.Tensor):
@@ -667,12 +657,8 @@ class LatentDiffusion(DDPM):
         if bs is not None:
             x = x[:bs]
         x = x.to(self.device)
-
-        print(x.shape)
         encoder_posterior = self.encode_first_stage(x)
-        # print("encoder_posterior", encoder_posterior)
-
-        z = self.get_first_stage_encoding(encoder_posterior[0]).detach()
+        z = self.get_first_stage_encoding(encoder_posterior).detach()
 
         if self.model.conditioning_key is not None:
             if cond_key is None:
@@ -783,7 +769,6 @@ class LatentDiffusion(DDPM):
                 z = torch.argmax(z.exp(), dim=1).long()
             z = self.first_stage_model.quantize.get_codebook_entry(z, shape=None)
             z = rearrange(z, 'b h w c -> b c h w').contiguous()
-            # z = z.contiguous()
 
         z = 1. / self.scale_factor * z
 
@@ -904,7 +889,7 @@ class LatentDiffusion(DDPM):
         return [rescale_bbox(b) for b in bboxes]
 
     def apply_model(self, x_noisy, t, cond, return_ids=False):
-        # print("COND >>>>>>>>>>>>>>>>", cond)
+
         if isinstance(cond, dict):
             # hybrid case, cond is exptected to be a dict
             pass
@@ -1287,8 +1272,7 @@ class LatentDiffusion(DDPM):
                 xc = log_txt_as_img((x.shape[2], x.shape[3]), batch["caption"])
                 log["conditioning"] = xc
             elif self.cond_stage_key == 'class_label':
-                #xc = log_txt_as_img((x.shape[2], x.shape[3]), batch["human_label"])
-                xc = log_txt_as_img((x.shape[2], x.shape[3]), batch["label"])
+                xc = log_txt_as_img((x.shape[2], x.shape[3]), batch["human_label"])
                 log['conditioning'] = xc
             elif isimage(xc):
                 log["conditioning"] = xc
@@ -1416,19 +1400,18 @@ class DiffusionWrapper(pl.LightningModule):
         assert self.conditioning_key in [None, 'concat', 'crossattn', 'hybrid', 'adm']
 
     def forward(self, x, t, c_concat: list = None, c_crossattn: list = None):
+        
         if self.conditioning_key is None:
             out = self.diffusion_model(x, t)
         elif self.conditioning_key == 'concat':
-            breakpoint()
-            # print("Shapes >>>>",x, c_concat)
-            c_concat = [c_concat[0].resize_([8,32,32])]
             xc = torch.cat([x] + c_concat, dim=1)
             out = self.diffusion_model(xc, t)
         elif self.conditioning_key == 'crossattn':
             cc = torch.cat(c_crossattn, 1)
             out = self.diffusion_model(x, t, context=cc)
         elif self.conditioning_key == 'hybrid':
-            c_concat = [c_concat[0].resize_([8,32,32])]
+            print(c_concat)
+            print("Shape of the class labels", c_concat[0].size())
             xc = torch.cat([x] + c_concat, dim=1)
             cc = torch.cat(c_crossattn, 1)
             out = self.diffusion_model(xc, t, context=cc)

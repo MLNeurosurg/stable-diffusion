@@ -142,7 +142,7 @@ class ImageNetTrain(ImageNetBase):
         147897477120,
     ]
 
-    def __init__(self, process_images=True, data_root=None, **kwargs):
+    def __init__(self, process_images=True, data_root="/scratch/tocho_root/tocho0/achowdur/.cache/autoencoders/data/", **kwargs):
         self.process_images = process_images
         self.data_root = data_root
         super().__init__(**kwargs)
@@ -151,8 +151,9 @@ class ImageNetTrain(ImageNetBase):
         if self.data_root:
             self.root = os.path.join(self.data_root, self.NAME)
         else:
-            cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
-            self.root = os.path.join("/scratch/tocho_root/tocho0/achowdur/.cache", "autoencoders/data", self.NAME)
+            # cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
+            cachedir = "/scratch/tocho_root/tocho0/achowdur/.cache"
+            self.root = os.path.join(cachedir, "autoencoders/data", self.NAME)
 
         self.datadir = os.path.join(self.root, "data")
         self.txt_filelist = os.path.join(self.root, "filelist.txt")
@@ -208,7 +209,7 @@ class ImageNetValidation(ImageNetBase):
         1950000,
     ]
 
-    def __init__(self, process_images=True, data_root=None, **kwargs):
+    def __init__(self, process_images=True, data_root = "/scratch/tocho_root/tocho0/achowdur/.cache/autoencoders/data/", **kwargs):
         self.data_root = data_root
         self.process_images = process_images
         super().__init__(**kwargs)
@@ -217,8 +218,9 @@ class ImageNetValidation(ImageNetBase):
         if self.data_root:
             self.root = os.path.join(self.data_root, self.NAME)
         else:
-            cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
-            self.root = os.path.join("/scratch/tocho_root/tocho0/achowdur/.cache", "autoencoders/data", self.NAME)
+            # cachedir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
+            cachedir = "/scratch/tocho_root/tocho0/achowdur/.cache"
+            self.root = os.path.join(cachedir, "autoencoders/data", self.NAME)
         self.datadir = os.path.join(self.root, "data")
         self.txt_filelist = os.path.join(self.root, "filelist.txt")
         self.expected_length = 50000
