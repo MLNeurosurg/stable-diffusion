@@ -1,5 +1,5 @@
 model:
-  base_learning_rate: 5git pul.0e-5   # set to target_lr by starting main.py with '--scale_lr False'
+  base_learning_rate: 5.0e-5   # set to target_lr by starting main.py with '--scale_lr False'
   target: ldm.models.diffusion.ddpm.LatentDiffusion
   params:
     linear_start: 0.0015
@@ -38,6 +38,7 @@ model:
         channel_mult: [ 1,2,2,4 ]  # 32, 16, 8, 4, 2
         num_heads: 8
         use_scale_shift_norm: True
+        use_spatial_transformer: True
         resblock_updown: True
 
     first_stage_config:
@@ -63,7 +64,7 @@ model:
     cond_stage_config:
       target: ldm.modules.encoders.modules.ClassEmbedder
       params:
-        embed_dim: 512
+        embed_dim: 32
         n_classes: 7
         key: label
 

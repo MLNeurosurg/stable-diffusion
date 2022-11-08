@@ -20,6 +20,8 @@ from pytorch_lightning.utilities import rank_zero_info
 from ldm.data.base import Txt2ImgIterableBaseDataset
 from ldm.util import instantiate_from_config
 
+from tifffile import imread, imwrite, imsave
+
 
 def get_parser(**parser_kwargs):
     def str2bool(v):
@@ -327,15 +329,17 @@ class ImageLogger(Callback):
                 grid = (grid + 1.0) / 2.0  # -1,1 -> 0,1; c,h,w
             grid = grid.transpose(0, 1).transpose(1, 2).squeeze(-1)
             grid = grid.numpy()
-            grid = (grid * 255).astype(np.uint8)
-            filename = "{}_gs-{:06}_e-{:06}_b-{:06}.png".format(
+            grid = (grid * 255).astype(np.uint16)
+            filename = "{}_gs-{:06}_e-{:06}_b-{:06}.tiff".format(
                 k,
                 global_step,
                 current_epoch,
                 batch_idx)
             path = os.path.join(root, filename)
             os.makedirs(os.path.split(path)[0], exist_ok=True)
-            Image.fromarray(grid).save(path)
+            imwrite(path, grid)
+            # imsave(path, grid)
+            # Image.fromarray(grid).save(path)
 
     def log_img(self, pl_module, batch, batch_idx, split="train"):
         check_idx = batch_idx if self.log_on_batch_idx else pl_module.global_step
