@@ -19,12 +19,16 @@ def log_txt_as_img(wh, xc, size=10):
     # xc a list of captions to plot
     b = len(xc)
     txts = list()
+    print("tensor:", xc)
+    xc = xc.unsqueeze(1)
+    print("unsqueeze:", xc)
     for bi in range(b):
         txt = Image.new("RGB", wh, color="white")
         draw = ImageDraw.Draw(txt)
         font = ImageFont.truetype('data/DejaVuSans.ttf', size=size)
         nc = int(40 * (wh[0] / 256))
-        lines = "\n".join(xc[bi][start:start + nc] for start in range(0, len(xc[bi]), nc))
+        val = str(xc[bi])
+        lines = "\n".join(val[start:start + nc] for start in range(0, len(xc[bi]), nc))
 
         try:
             draw.text((0, 0), lines, fill="black", font=font)
