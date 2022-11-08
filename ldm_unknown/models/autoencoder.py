@@ -1,4 +1,3 @@
-from packaging import version
 import torch
 import pytorch_lightning as pl
 import torch.nn.functional as F
@@ -126,7 +125,7 @@ class VQModel(pl.LightningModule):
         x = batch[k]
         if len(x.shape) == 3:
             x = x[..., None]
-        x = x.permute(0,1,2,3).to(memory_format=torch.contiguous_format).float()
+        x = x.permute(0, 3, 1, 2).to(memory_format=torch.contiguous_format).float()
         if self.batch_resize_range is not None:
             lower_size = self.batch_resize_range[0]
             upper_size = self.batch_resize_range[1]
@@ -346,7 +345,7 @@ class AutoencoderKL(pl.LightningModule):
         x = batch[k]
         if len(x.shape) == 3:
             x = x[..., None]
-        x = x.permute(0, 1, 2, 3).to(memory_format=torch.contiguous_format).float()
+        x = x.permute(0, 3, 1, 2).to(memory_format=torch.contiguous_format).float()
         return x
 
     def training_step(self, batch, batch_idx, optimizer_idx):
