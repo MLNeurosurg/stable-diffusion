@@ -39,6 +39,7 @@ model:
         num_heads: 8
         use_scale_shift_norm: True
         use_spatial_transformer: True
+        context_dimention: 32
         resblock_updown: True
 
     first_stage_config:
