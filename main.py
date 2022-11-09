@@ -262,6 +262,7 @@ class SetupCallback(Callback):
             os.makedirs(self.logdir, exist_ok=True)
             os.makedirs(self.ckptdir, exist_ok=True)
             os.makedirs(self.cfgdir, exist_ok=True)
+            os.makedirs(os.path.join(self.logdir, "wandb"), exist_ok=True)
 
             if "callbacks" in self.lightning_config:
                 if 'metrics_over_trainsteps_checkpoint' in self.lightning_config['callbacks']:
